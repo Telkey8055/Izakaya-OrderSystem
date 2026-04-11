@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>居酒屋注文</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 10px 20px;
+      margin: 10px;
+    }
+
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    .counter {
+      display: flex;
+      align-items: center;
+    }
+
+    .counter button {
+      width: 40px;
+      height: 40px;
+    }
+
+    .counter span {
+      margin: 0 10px;
+      font-size: 18px;
+      width: 30px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ① ウェルカム画面 -->
+<div id="welcome">
+  <h1>ようこそ！〇〇居酒屋へ</h1>
+  <button onclick="showMenu()">注文する</button>
+</div>
+
+<!-- ② メニュー画面 -->
+<div id="menu" class="hidden">
+  <h2>メニュー</h2>
+  <div id="menuList"></div>
+  <button onclick="submitOrder()">注文する</button>
+</div>
+
+<script>
+const menuData = [
+  "ビール",
+  "ハイボール",
+  "唐揚げ",
+  "枝豆",
+  "ポテトフライ"
+];
+
+let order = {};
+
+// 初期化
+function initMenu() {
+  const menuList = document.getElementById("menuList");
+  menuData.forEach(item => {
+    order[item] = 0;
+
+    const div = document.createElement("div");
+    div.className = "menu-item";
+
+    div.innerHTML = `
+      <span>${item}</span>
+      <div class="counter">
+        <button onclick="changeCount('${item}', -1)">-</button>
+        <span id="${item}">0</span>
+        <button onclick="changeCount('${item}', 1)">+</button>
+      </div>
+    `;
+
+    menuList.appendChild(div);
+  });
+}
+
+// ②画面遷移
+function showMenu() {
+  document.getElementById("welcome").classList.add("hidden");
+  document.getElementById("menu").classList.remove("hidden");
+}
+
+// ④個数調整
+function changeCount(item, delta) {
+  order[item] += delta;
+  if (order[item] < 0) order[item] = 0;
+  document.getElementById(item).innerText = order[item];
+}
+
+// ⑤注文送信
+function submitOrder() {
+  const filteredOrder = Object.entries(order)
+    .filter(([_, qty]) => qty > 0);
+
+  if (filteredOrder.length === 0) {
+    alert("注文がありません");
+    return;
+  }
+
+  fetch("YOUR_GAS_URL", {
+    method: "POST",
+    body: JSON.stringify(filteredOrder)
+  })
+  .then(() => {
+    alert("注文を送信しました！");
+  })
+  .catch(() => {
+    alert("送信失敗");
+  });
+}
+
+initMenu();
+</script>
+
+</body>
+</html>
