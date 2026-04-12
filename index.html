@@ -118,7 +118,7 @@ function submitOrder() {
     return;
   }
 
-  fetch("YOUR_GAS_URL", {
+  fetch("https://script.google.com/macros/s/AKfycbxcMc3tseF84gEx1TgsXlZgd0rwYeWY4gLG8f0wew99ZX72xXO8u75KJMW7WT9dG_dc/exec", {
     method: "POST",
     body: JSON.stringify(filteredOrder)
   })
