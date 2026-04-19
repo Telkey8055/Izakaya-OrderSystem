@@ -46,6 +46,32 @@
         box-shadow: 0 0 20px rgba(255, 100, 50, 0.8);
     }
 
+    /* 暖簾 */
+    .noren {
+        background: #0d1b2a;
+        padding: 30px;
+        margin: 0 auto;
+        width: 70%;
+        border-radius: 10px;
+        position: relative;
+    }
+
+    .noren::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 10%;
+        width: 80%;
+        height: 10px;
+        background: repeating-linear-gradient(
+            to right,
+            transparent,
+            transparent 10px,
+            #0d1b2a 10px,
+            #0d1b2a 20px
+        );
+    }
+    
     .hidden {
       display: none;
     }
