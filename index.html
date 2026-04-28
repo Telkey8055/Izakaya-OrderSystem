@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+<!-- head内はCSS-->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   
@@ -16,7 +17,11 @@
       height: 100%;
       overflow: hidden;
     }
-    /* user-scalable=no */
+
+    body.menu-active {
+      overflow-y: auto;
+    }
+
     /* 背景情報 */
     .bg { 
       position: fixed;
@@ -107,6 +112,7 @@
       display: inline-block;
     }
 
+    /* スマホでの閲覧時のみ適応する項目*/  
     @media screen and (max-width: 768px) {
     .title { font-size: 24px; }
     .lantern { /*width: 60px;*/ height: 80px; }
@@ -156,6 +162,7 @@
   <button onclick="submitOrder()">注文する</button>
 </div>
 
+<!-- 以下はJavascriptによる制御文-->
 <script>
 const menuData = [
   "もも",
@@ -208,6 +215,9 @@ function initMenu() {
 function showMenu() {
   document.getElementById("welcome").classList.add("hidden");
   document.getElementById("menu").classList.remove("hidden");
+
+  /* body にクラス追加してスクロール許可 */
+  document.body.classList.add("menu-active");
 }
 
 // ④個数調整
