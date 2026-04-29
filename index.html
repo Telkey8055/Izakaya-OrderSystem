@@ -2,8 +2,10 @@
 <html lang="ja">
 <head>
 <!-- head内はCSS-->
+ <!-- 設定-->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet">
   
   <title>居酒屋注文</title>
   <style>
@@ -50,7 +52,6 @@
 
     .lantern {
         background: url("images/Chochin.png") center/contain no-repeat;
-        /*width: 100px;*/
         height: 140px;
         aspect-ratio: 100/140;
 
@@ -59,6 +60,7 @@
         align-items: center;
 
         color: black;
+        font-family: 'Yuji Syuku', serif;
         font-weight: bold;
         font-size: 24px;
 
@@ -69,13 +71,16 @@
 
     /* 暖簾 */
     .noren {
-        /*background: #0d1b2a;*/
         background: url("images/Noren.png") center/100% auto no-repeat;
         padding: 30px;
         margin: 0 auto;
         width: 70%;
         border-radius: 10px;
         position: relative;
+    }
+
+    .title {
+        font-family: 'Yuji Syuku', serif;
     }
 
     .hidden {
