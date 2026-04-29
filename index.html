@@ -93,6 +93,24 @@
       margin: 10px;
     }
 
+    .menu-section {
+      margin-bottom: 40px;
+    }
+
+    .menu-section h2 {
+      background: rgba(120, 0, 0, 0.8);
+      color: white;
+      padding: 10px;
+      border-left: 6px solid gold;
+      font-size: 1.8rem;
+    }
+
+    .menu-items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
     .menu-item {
       display: flex;
       justify-content: space-between;
@@ -170,26 +188,26 @@
 <!-- 以下はJavascriptによる制御文-->
 <script>
 const menuData = [
-  "もも",
-  "ねぎま",
-  "砂肝",
-  "ぼんじり",
-  "とりかわ",
-  "アスパラベーコン",
-  "トマト",
-  "揚げだし豆腐",
-  "ぎょうざの皮ピザ",
-  "燻製3種(ベーコン・チーズ・うずらの卵)",
-  "桜エビのかき揚げ",
-  "軟骨のから揚げ",
-  "きゅうりの浅漬け",
-  "山芋焼き",
-  "無限ピーマン",
-  "だし巻き卵",
-  "燻製ポテサラ",
-  "里芋の煮っころがし",
-  "茄子の煮びたし",
-  "キャベツ"
+  {category: "スピードメニュー", name: "きゅうりの浅漬け"},
+  {category: "スピードメニュー", name: "無限ピーマン"},
+  {category: "スピードメニュー", name: "里芋の煮っころがし"},
+  {category: "スピードメニュー", name: "茄子の煮びたし"},
+  {category: "スピードメニュー", name: "キャベツ"},
+  {category: "串焼き", name: "もも"},
+  {category: "串焼き", name: "ねぎま"},
+  {category: "串焼き", name: "砂肝"},
+  {category: "串焼き", name: "ぼんじり"},
+  {category: "串焼き", name: "とりかわ"},
+  {category: "串焼き", name: "アスパラベーコン"},
+  {category: "串焼き", name: "トマト"},
+  {category: "一品", name: "揚げだし豆腐"},
+  {category: "一品", name: "ぎょうざの皮ピザ"},
+  {category: "一品", name: "燻製3種(ベーコン・チーズ・うずらの卵)"},
+  {category: "一品", name: "桜エビのかき揚げ"},
+  {category: "一品", name: "軟骨のから揚げ"},
+  {category: "一品", name: "山芋焼き"},
+  {category: "一品", name: "だし巻き卵"},
+  {category: "一品", name: "燻製ポテサラ"}
 ];
 
 let order = {};
@@ -197,18 +215,36 @@ let order = {};
 // 初期化
 function initMenu() {
   const menuList = document.getElementById("menuList");
+  menuList.innerHTML = "";
+
+  const categories = {};
+
   menuData.forEach(item => {
-    order[item] = 0;
+    order[item.name] = 0;
+
+    if (!categories[item.category]) {
+      categories[item.category] = document.createElement("div");
+      categories[item.category].className = "menu-section";
+
+      categories[item.category].innerHTML = `
+        <h2>${item.category}</h2>
+        <div class="menu-items"></div>
+      `;
+
+      menuList.appendChild(categories[item.category]);
+    }
+
+    const menuItems = categories[item.category].querySelector(".menu-items");
 
     const div = document.createElement("div");
     div.className = "menu-item";
 
     div.innerHTML = `
-      <span>${item}</span>
+      <span>${item.name}</span>
       <div class="counter">
-        <button onclick="changeCount('${item}', -1)">-</button>
-        <span id="${item}">0</span>
-        <button onclick="changeCount('${item}', 1)">+</button>
+        <button onclick="changeCount('${item.name}', -1)">-</button>
+        <span id="${item.name}">0</span>
+        <button onclick="changeCount('${item.name}', 1)">+</button>
       </div>
     `;
 
